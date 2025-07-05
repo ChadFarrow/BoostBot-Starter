@@ -46,25 +46,34 @@ A simplified version of BoostBot for new users. This bot receives Helipad webhoo
 
 ## Quick Start
 
-### 1. Clone the repository
+### 1. Get a Nostr Key
+
+**You need a Nostr key pair before starting. This is required for the bot to work.**
+
+1. Visit https://nostr.com/
+2. Generate a new key pair
+3. Copy the `nsec` (private key) - you'll need this for Step 4
+4. Keep your `npub` (public key) for reference
+
+### 2. Clone the repository
 
 ```bash
 git clone https://github.com/ChadFarrow/BoostBot-Starter.git
 ```
 
-### 2. Navigate to the directory
+### 3. Navigate to the directory
 
 ```bash
 cd BoostBot-Starter
 ```
 
-### 3. Copy environment file
+### 4. Copy environment file
 
 ```bash
 cp env.example .env
 ```
 
-### 4. Configure Environment
+### 5. Configure Environment
 
 **The `.env` file is hidden by default because its name starts with a dot. Here's how to edit it on different systems:**
 
@@ -115,7 +124,7 @@ NOSTR_BOOST_BOT_NSEC=nsec1your_actual_nsec_here
 
 That's it! All other settings are optional.
 
-### 5. Install and Run
+### 6. Install and Run
 
 ```bash
 # Install dependencies
@@ -125,7 +134,7 @@ npm install
 npm start
 ```
 
-### 6. Test It
+### 7. Test It
 
 In another terminal:
 ```bash
@@ -184,7 +193,7 @@ Posts include:
 
 ## Getting a Nostr Key
 
-1. Visit https://nostr-keygen.com/
+1. Visit https://nostr.com/
 2. Generate a new key pair
 3. Copy the `nsec` (private key) to your `.env` file
 4. Keep your `npub` (public key) for reference
