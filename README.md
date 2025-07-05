@@ -131,6 +131,8 @@ npm start
 
 ### 7. Test It
 
+**Note:** You need to be in the same directory as your BoostBot Starter files to run the test command below.
+
 In another terminal:
 ```bash
 npm test
