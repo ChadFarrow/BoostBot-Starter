@@ -235,13 +235,18 @@ Posts include:
 - Message (if provided)
 - Standard hashtags
 
-**Example post:**
+**Example Nostr post:**
+
 ```
-🎙️ Boosted "My Awesome Podcast" with 1000 sats
-From: @alice
-Message: "Great episode! Love the insights on Bitcoin."
-#Podcast2 #Value4Value #Lightning #Nostr
+💰 Boost: 333 sats from ChadF → Bowl After Bowl
+💬 "toomanyeggs.com"
+
+#NostrBoostBot #Bitcoin #Lightning #Nostr #Podcast
 ```
+
+![Example Nostr Post](https://user-images.githubusercontent.com/your-github-username/your-screenshot.png)
+
+_This is a real example of a Nostr post created by the bot._
 
 ## Environment Variables
 
