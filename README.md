@@ -50,13 +50,10 @@ A simplified version of BoostBot for new users. This bot receives Helipad webhoo
 
 **You need a Nostr key pair before starting. This is required for the bot to work.**
 
-1.1 Visit https://nostr.com/
-
-1.2 Generate a new key pair
-
-1.3 Copy the `nsec` (private key) - you'll need this for Step 5
-
-1.4 Keep your `npub` (public key) for reference
+- 1.1 Visit https://nostr.com/
+- 1.2 Generate a new key pair
+- 1.3 Copy the `nsec` (private key) - you'll need this for Step 5
+- 1.4 Keep your `npub` (public key) for reference
 
 ### 2. Clone the repository
 
@@ -80,40 +77,35 @@ cp env.example .env
 
 **The `.env` file is hidden by default because its name starts with a dot. Here's how to edit it on different systems:**
 
-#### 5.1 Mac & Linux
-
-5.1.1 Show hidden files in Finder (Mac):
-   - Open the folder in Finder.
-   - Press `Command + Shift + .` (period) to toggle hidden files.
-   - You should now see `.env`. Double-click to open it in your text editor (e.g., TextEdit, VS Code).
-
-5.1.2 Edit from the Terminal:
-   - Open Terminal.
-   - Use a text editor to open `.env`:
-     ```bash
-     nano .env
-     ```
-     or
-     ```bash
-     open -a "Visual Studio Code" .env
-     ```
-   - Make your changes, then save and close the editor.
-
-#### 5.2 Windows
-
-5.2.1 Show hidden files in File Explorer:
-   - Open the project folder.
-   - Click the "View" tab.
-   - Check the box for "Hidden items."
-   - You should now see `.env`. Right-click and open with Notepad or your preferred editor.
-
-5.2.2 Edit from Command Prompt or PowerShell:
-   - Open Command Prompt or PowerShell.
-   - Use Notepad to open `.env`:
-     ```
-     notepad .env
-     ```
-   - Make your changes, then save and close Notepad.
+- 5.1 Mac & Linux
+  - 5.1.1 Show hidden files in Finder (Mac):
+    - Open the folder in Finder.
+    - Press `Command + Shift + .` (period) to toggle hidden files.
+    - You should now see `.env`. Double-click to open it in your text editor (e.g., TextEdit, VS Code).
+  - 5.1.2 Edit from the Terminal:
+    - Open Terminal.
+    - Use a text editor to open `.env`:
+      ```bash
+      nano .env
+      ```
+      or
+      ```bash
+      open -a "Visual Studio Code" .env
+      ```
+    - Make your changes, then save and close the editor.
+- 5.2 Windows
+  - 5.2.1 Show hidden files in File Explorer:
+    - Open the project folder.
+    - Click the "View" tab.
+    - Check the box for "Hidden items."
+    - You should now see `.env`. Right-click and open with Notepad or your preferred editor.
+  - 5.2.2 Edit from Command Prompt or PowerShell:
+    - Open Command Prompt or PowerShell.
+    - Use Notepad to open `.env`:
+      ```
+      notepad .env
+      ```
+    - Make your changes, then save and close Notepad.
 
 **Tip:**  
 If you don't see the `.env` file after copying, make sure you copied it from `env.example` and that you're in the correct directory.
@@ -148,69 +140,57 @@ npm test
 
 To connect Helipad to BoostBot Starter, you need to add a webhook in Helipad so it can send boost events to your bot.
 
-8.1 Open Helipad Settings
-- Click the **gear icon** (⚙️) in the top right corner of Helipad.
-
-8.2 Go to the "Webhooks" Tab
-- Click the **Webhooks** tab at the top.
-
-8.3 Add a New Webhook
-- Click the **Add Webhook** button.
-
-8.4 Fill Out the Webhook Form
-- **URL:**  
-  Enter the URL where your BoostBot Starter is running.  
-  For example:
-  ```
-  http://<YOUR_SERVER_IP>:3333/helipad-webhook
-  ```
-  Replace `<YOUR_SERVER_IP>` with your computer's local IP address (see below).
-
-- **Trigger on amount:**  
-  Select **Any amount** (or set a minimum if you want).
-
-- **Trigger on:**  
-  Check the boxes for:
-  - New boosts
-  - New streams
-  - New sent boosts
-
-- **Enabled:**  
-  Make sure this is checked.
-
-8.5 Save the Webhook
-- Click **Save changes**.
-
-8.6 Test the Connection
-- Send a boost from a compatible app and check your BoostBot Starter logs to confirm it's working.
+- 8.1 Open Helipad Settings
+  - Click the **gear icon** (⚙️) in the top right corner of Helipad.
+- 8.2 Go to the "Webhooks" Tab
+  - Click the **Webhooks** tab at the top.
+- 8.3 Add a New Webhook
+  - Click the **Add Webhook** button.
+- 8.4 Fill Out the Webhook Form
+  - **URL:**  
+    Enter the URL where your BoostBot Starter is running.  
+    For example:
+    ```
+    http://<YOUR_SERVER_IP>:3333/helipad-webhook
+    ```
+    Replace `<YOUR_SERVER_IP>` with your computer's local IP address (see below).
+  - **Trigger on amount:**  
+    Select **Any amount** (or set a minimum if you want).
+  - **Trigger on:**  
+    Check the boxes for:
+    - New boosts
+    - New streams
+    - New sent boosts
+  - **Enabled:**  
+    Make sure this is checked.
+- 8.5 Save the Webhook
+  - Click **Save changes**.
+- 8.6 Test the Connection
+  - Send a boost from a compatible app and check your BoostBot Starter logs to confirm it's working.
 
 ---
 
-8.7 How to Find Your Local IP Address
-
-- **Mac:**
-  8.7.1 Open Terminal and run:
-     ```bash
-     ipconfig getifaddr en0
-     ```
-     (or try `en1` if you're on Wi-Fi and `en0` doesn't work)
-  8.7.2 The output is your local IP address (e.g., `192.168.1.42`).
-
-- **Windows:**
-  8.7.1 Open Command Prompt and run:
-     ```
-     ipconfig
-     ```
-  8.7.2 Look for the `IPv4 Address` under your active network adapter.
-
-- **Linux:**
-  8.7.1 Open Terminal and run:
-     ```bash
-     hostname -I
-     ```
-  8.7.2 The first address is usually your local IP.
-
-Use this IP in the webhook URL field in Helipad.
+- 8.7 How to Find Your Local IP Address
+  - **Mac:**
+    - 8.7.1 Open Terminal and run:
+      ```bash
+      ipconfig getifaddr en0
+      ```
+      (or try `en1` if you're on Wi-Fi and `en0` doesn't work)
+    - 8.7.2 The output is your local IP address (e.g., `192.168.1.42`).
+  - **Windows:**
+    - 8.7.1 Open Command Prompt and run:
+      ```
+      ipconfig
+      ```
+    - 8.7.2 Look for the `IPv4 Address` under your active network adapter.
+  - **Linux:**
+    - 8.7.1 Open Terminal and run:
+      ```bash
+      hostname -I
+      ```
+    - 8.7.2 The first address is usually your local IP.
+  - Use this IP in the webhook URL field in Helipad.
 
 ## API Endpoints
 
