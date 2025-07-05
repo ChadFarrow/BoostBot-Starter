@@ -22,6 +22,10 @@ app.use(express.static('public'));
 // Get authentication token from environment (optional)
 const AUTH_TOKEN = process.env.HELIPAD_WEBHOOK_TOKEN;
 
+// Debounce logic to avoid duplicate Nostr posts for the same boost
+const pendingBoosts = {};
+const BOOST_DEBOUNCE_MS = 2000; // 2 seconds
+
 // Middleware to check authentication (if token is set)
 function authenticate(req, res, next) {
   // If no token is set, skip authentication
@@ -68,42 +72,44 @@ app.post('/helipad-webhook', authenticate, async (req, res) => {
       podcast: event.podcast,
       amount: Math.floor(event.value_msat_total / 1000)
     });
-    
-    // Convert millisatoshis to satoshis for easier reading
-    const satsAmount = Math.floor(event.value_msat_total / 1000);
-    
-    // Map action numbers to readable names
-    const actionNames = {
-      0: 'Error',
-      1: 'Stream',
-      2: 'Boost',
-      3: 'Unknown', 
-      4: 'Auto Boost'
-    };
-    const actionName = actionNames[event.action] || 'Unknown';
-    
-    // Log what we received
-    logger.info(`💰 ${actionName}: ${satsAmount} sats from ${event.sender || 'Unknown'} → ${event.podcast || 'Unknown'}`);
-    
-    // Only post boosts (action === 2) to Nostr
-    if (event.action === 2 && satsAmount > 0) {
-      try {
-        // Send the boost to Nostr
-        await announceHelipadPayment(event);
-      } catch (nostrError) {
-        logger.error('❌ Error posting to Nostr:', nostrError.message);
-        // Don't fail the webhook if Nostr posting fails
-      }
-    } else {
-      logger.info('ℹ️  Skipping Nostr post (not a boost or zero amount)');
+
+    // Debounce by boost index
+    const boostId = event.index;
+    if (pendingBoosts[boostId]) {
+      clearTimeout(pendingBoosts[boostId].timer);
     }
-    
+    pendingBoosts[boostId] = {
+      event,
+      timer: setTimeout(async () => {
+        // Only post to Nostr once per boost
+        const satsAmount = Math.floor(event.value_msat_total / 1000);
+        const actionNames = {
+          0: 'Error',
+          1: 'Stream',
+          2: 'Boost',
+          3: 'Unknown', 
+          4: 'Auto Boost'
+        };
+        const actionName = actionNames[event.action] || 'Unknown';
+        logger.info(`💰 (Debounced) ${actionName}: ${satsAmount} sats from ${event.sender || 'Unknown'} → ${event.podcast || 'Unknown'}`);
+        if (event.action === 2 && satsAmount > 0) {
+          try {
+            await announceHelipadPayment(event);
+          } catch (nostrError) {
+            logger.error('❌ Error posting to Nostr:', nostrError.message);
+          }
+        } else {
+          logger.info('ℹ️  Skipping Nostr post (not a boost or zero amount)');
+        }
+        delete pendingBoosts[boostId];
+      }, BOOST_DEBOUNCE_MS)
+    };
+
     // Send success response back to Helipad
     res.json({ 
       success: true, 
-      message: 'Webhook processed successfully',
-      action: actionName,
-      amount: satsAmount
+      message: 'Boost received and will be posted after debounce.',
+      index: boostId
     });
   } catch (error) {
     logger.error('❌ Error processing webhook:', error.message);
