@@ -285,6 +285,33 @@ Message: "Great episode! Love the insights on Bitcoin."
 - Check that port 3333 is available
 - Verify your `.env` file exists
 
+### Viewing Logs
+
+To troubleshoot issues, you may need to view the logs for BoostBot Starter. Here's how:
+
+#### If running with npm (locally):
+- Open your terminal where you started the bot.
+- Logs are printed directly to the terminal window.
+- If you closed the terminal, restart the bot with:
+  ```bash
+  npm start
+  ```
+  and watch for log output.
+
+#### If running with Docker:
+- Use the following command to view logs:
+  ```bash
+  docker logs boostbot-starter
+  ```
+- You can also follow logs in real time:
+  ```bash
+  docker logs -f boostbot-starter
+  ```
+
+#### Log Files (Advanced):
+- If you have configured logging to a file (custom setup), check the path you specified in your logger configuration.
+- By default, BoostBot Starter logs to the console only.
+
 ## Development
 
 ```bash
