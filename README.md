@@ -46,10 +46,8 @@ A simplified version of BoostBot for new users. This bot receives Helipad webhoo
 
 ## Quick Start
 
+   ## Quick Start
 
-3. **With this:**
-
-   ```markdown
    ### 1. Clone the repository
 
    ```bash
@@ -69,18 +67,32 @@ A simplified version of BoostBot for new users. This bot receives Helipad webhoo
    ```
 
    ### 4. Configure Environment
+
+   Edit `.env` file with **only one required setting**:
+
+   ```bash
+   # REQUIRED: Your Nostr private key
+   NOSTR_BOOST_BOT_NSEC=nsec1your_actual_nsec_here
    ```
 
-4. **Update the remaining step numbers:**
-   - Current "Step 2" becomes "Step 4"
-   - Current "Step 3" becomes "Step 5" 
-   - Current "Step 4" becomes "Step 6"
+   That's it! All other settings are optional.
 
-5. **Save and commit:**
+   ### 5. Install and Run
+
    ```bash
-   git add README.md
-   git commit -m "Split setup into 3 separate steps"
-   git push
+   # Install dependencies
+   npm install
+
+   # Start the bot
+   npm start
+   ```
+
+   ### 6. Test It
+
+   In another terminal:
+   ```bash
+   npm test
+   ```
    ```
 
 This will make it much clearer for new users to follow step by step!
