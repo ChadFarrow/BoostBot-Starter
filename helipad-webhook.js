@@ -24,7 +24,7 @@ const AUTH_TOKEN = process.env.HELIPAD_WEBHOOK_TOKEN;
 
 // Debounce and aggregate logic to avoid duplicate Nostr posts for the same boost
 const pendingBoosts = {};
-const BOOST_DEBOUNCE_MS = 2000; // 2 seconds
+const BOOST_DEBOUNCE_MS = 30000; // 30 seconds
 
 // Middleware to check authentication (if token is set)
 function authenticate(req, res, next) {
