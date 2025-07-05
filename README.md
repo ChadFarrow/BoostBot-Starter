@@ -66,6 +66,46 @@ cp env.example .env
 
 ### 4. Configure Environment
 
+**The `.env` file is hidden by default because its name starts with a dot. Here's how to edit it on different systems:**
+
+#### **Mac & Linux**
+
+1. **Show hidden files in Finder (Mac):**
+   - Open the folder in Finder.
+   - Press `Command + Shift + .` (period) to toggle hidden files.
+   - You should now see `.env`. Double-click to open it in your text editor (e.g., TextEdit, VS Code).
+
+2. **Edit from the Terminal:**
+   - Open Terminal.
+   - Use a text editor to open `.env`:
+     ```bash
+     nano .env
+     ```
+     or
+     ```bash
+     open -a "Visual Studio Code" .env
+     ```
+   - Make your changes, then save and close the editor.
+
+#### **Windows**
+
+1. **Show hidden files in File Explorer:**
+   - Open the project folder.
+   - Click the "View" tab.
+   - Check the box for "Hidden items."
+   - You should now see `.env`. Right-click and open with Notepad or your preferred editor.
+
+2. **Edit from Command Prompt or PowerShell:**
+   - Open Command Prompt or PowerShell.
+   - Use Notepad to open `.env`:
+     ```
+     notepad .env
+     ```
+   - Make your changes, then save and close Notepad.
+
+**Tip:**  
+If you don't see the `.env` file after copying, make sure you copied it from `env.example` and that you're in the correct directory.
+
 Edit `.env` file with **only one required setting**:
 
 ```bash
