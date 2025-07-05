@@ -49,8 +49,13 @@ A simplified version of BoostBot for new users. This bot receives Helipad webhoo
 ### 1. Clone and Setup
 
 ```bash
-git clone https://github.com/ChadFarrow/Helipad-to-Nostr-BoostBot.git
-cd Helipad-to-Nostr-BoostBot/boostbot-starter
+git clone https://github.com/ChadFarrow/BoostBot-Starter.git
+
+```bash
+cd BoostBot-Starter
+
+```bash
+
 cp env.example .env
 ```
 
