@@ -166,9 +166,6 @@ To connect Helipad to BoostBot Starter, you need to add a webhook in Helipad so 
   ```
   Replace `<YOUR_SERVER_IP>` with your computer's local IP address (see below).
 
-- **Authorization token:**  
-  (Optional) If you set `HELIPAD_WEBHOOK_TOKEN` in your `.env`, enter the same token here. Otherwise, leave blank.
-
 - **Trigger on amount:**  
   Select **Any amount** (or set a minimum if you want).
 
@@ -268,11 +265,9 @@ Message: "Great episode! Love the insights on Bitcoin."
 | Variable | Required | Description |
 |----------|----------|-------------|
 | `NOSTR_BOOST_BOT_NSEC` | **Yes** | Your Nostr private key (nsec format) |
-| `HELIPAD_WEBHOOK_TOKEN` | No | Authentication token for webhooks |
 | `TEST_MODE` | No | Set to 'true' for test mode |
 | `PORT` | No | Server port (default: 3333) |
-
-
+| `LOG_LEVEL` | No | Log level (ERROR, WARN, INFO, DEBUG) |
 
 ## Troubleshooting
 
@@ -283,7 +278,6 @@ Message: "Great episode! Love the insights on Bitcoin."
 
 ### Webhook not working
 - Verify the webhook URL is correct
-- Check authentication token if configured
 - Ensure the webhook payload format is correct
 
 ### Bot won't start
