@@ -131,12 +131,18 @@ npm start
 
 ### 7. Test It
 
-**Note:** You need to be in the same directory as your BoostBot Starter files to run the test command below.
+**Note:** You need to be in the same directory as your BoostBot Starter files to run the test commands below.
 
 In another terminal:
 ```bash
 npm test
 ```
+
+To test posting directly to Nostr (optional, but recommended):
+```bash
+node test-nostr.js
+```
+If successful, you will see a confirmation in your terminal and the test post will appear in your Nostr client.
 
 ### 8. Set Up the Webhook in Helipad
 
