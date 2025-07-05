@@ -1,210 +1,286 @@
-# BoostBot Starter
+# 🚀 BoostBot-Starter
+
+**Automatically share your Podcasting 2.0 support on Nostr**
 
 > **Note**: This is the simplified starter version of BoostBot. For the full version with advanced features, see the [main repository](../).
 
-## Requirements
+## 🤔 What is BoostBot-Starter?
 
-**Helipad and Alby Hub are required for this project.**
+BoostBot-Starter automatically shares your Podcasting 2.0 Boost to Nostr whenever you send Boosts to podcasters or musicians.
 
-- Helipad is a simple LND poller and web front-end to see and read boosts and boostagrams.
-- BoostBot Starter receives webhooks from Helipad and posts boosts to Nostr.
-- You must have Helipad running and configured to send webhooks to BoostBot Starter.
-- Get Helipad here: [https://github.com/Podcastindex-org/helipad](https://github.com/Podcastindex-org/helipad)
-- **You will also need Alby Hub running on your node.**
-  - Alby Hub is available in the app stores of [Umbrel](https://umbrel.com/) and [Start9](https://start9.com/).
-  - See the Alby Hub guide: [https://guides.getalby.com/user-guide/alby-hub/alby-hub-flavors/umbrel-start9-etc](https://guides.getalby.com/user-guide/alby-hub/alby-hub-flavors/umbrel-start9-etc)
-- **Helipad is most commonly run on:**
-  - [Start9](https://start9.com/)
-  - [Umbrel](https://umbrel.com/)
-  - [RaspiBlitz](https://github.com/raspiblitz/raspiblitz)
+**Example:** You boost "My Awesome Podcast" with 1000 sats → BoostBot posts:
+```
+🎙️ Boosted "My Awesome Podcast" with 1000 sats
+From: @alice
+Message: "Great episode! Love the insights on Bitcoin."
+#Podcast2 #Value4Value #Lightning #Nostr
+```
 
-**Note:** Currently, BoostBot Starter only posts **sent boosts** to Nostr. Support for received boosts and streams may be added in the future.
+### 🎯 Perfect for:
+- Podcast listeners who boost shows with Bitcoin
+- Nostr users wanting to share their podcast discovery
+- Supporting the Value4Value podcasting movement
 
-**⚠️ Security Disclaimer:** I recommend creating a new set of Nostr keys for this bot so you don't leak your personal ones.
+## 🏗️ How It Works
 
-**📱 Compatible Apps:** This only works with apps that use AlbyHub like Podverse, PodcastGuru, CurioCaster, Castamatic, and LNBeats. Find more compatible apps at [https://podcasting2.org/apps](https://podcasting2.org/apps).
+```
+Your Podcast App → Lightning Payment → Helipad → BoostBot-Starter → Nostr Post
+       📱               ⚡           🚁           🤖            📱
+```
 
-A simplified version of BoostBot for new users. This bot receives Helipad webhooks and posts boosts to Nostr without the complex custom features of the full version.
+1. **You boost a podcast** in a compatible app (like Podverse, CurioCaster)
+2. **Helipad captures it** on your Lightning node
+3. **BoostBot-Starter receives a webhook** from Helipad
+4. **Your boost gets posted** to your Nostr feed
 
-## Features
+## ✅ What's Included vs ❌ What's Not
 
-- ✅ Receives Helipad webhooks
-- ✅ Posts boosts to Nostr
-- ✅ Simple setup (no TypeScript, no build step)
-- ✅ Clear logging with emojis
-- ✅ Health checks
-- ✅ Easy testing
+| ✅ **Starter Version** | ❌ **Full Version Only** |
+|----------------------|--------------------------|
+| Posts boosts to Nostr | Karma system |
+| Simple setup (no build step) | Custom npub mappings |
+| Clear emoji logging | Daily/weekly summaries |
+| Health checks | Complex monitoring |
+| Easy testing | Boost session tracking |
+| | Custom show-specific logic |
 
-## What's NOT included (compared to full version)
+## 📋 Prerequisites
 
-- ❌ Karma system
-- ❌ Custom npub mappings
-- ❌ Daily/weekly summaries
-- ❌ Complex monitoring
-- ❌ Boost session tracking
-- ❌ Custom show-specific logic
+### Required Infrastructure:
+- **🏠 Lightning Node** - [Umbrel](https://umbrel.com/), [Start9](https://start9.com/), or [RaspiBlitz](https://github.com/raspiblitz/raspiblitz)
+- **⚡ Alby Hub** - Available in your node's app store ([setup guide](https://guides.getalby.com/user-guide/alby-hub/alby-hub-flavors/umbrel-start9-etc))
+- **🚁 Helipad** - Monitors Lightning payments ([get it here](https://github.com/Podcastindex-org/helipad))
 
-## Quick Start
+### What You Need:
+- **📱 Compatible podcast app** - [Podverse](https://podverse.fm/), [PodcastGuru](https://podcastguru.io/), [CurioCaster](https://curiocaster.com/), [Castamatic](https://castamatic.com/), [LNBeats](https://lnbeats.com/) ([full list](https://podcasting2.org/apps))
+- **🔑 Nostr account** - We'll help you create one below
+- **💻 Basic terminal skills** - Copy/paste commands
 
-### 1. Get a Nostr Key
+> **⚠️ Security Note:** Create a NEW Nostr key pair for this bot - don't use your personal keys!
 
-**You need a Nostr key pair before starting. This is required for the bot to work.**
+> **🔍 Current Limitation:** Only **sent boosts** are posted to Nostr (not received boosts or streams)
 
-- 1.1 Visit https://nostr.com/
-- 1.2 Generate a new key pair
-- 1.3 Copy the `nsec` (private key) - you'll need this for Step 5
-- 1.4 Keep your `npub` (public key) for reference
+## 🚀 Quick Setup
 
-### 2. Clone the repository
+### Step 1: Get Your Nostr Keys
+
+**🔑 You need Nostr keys for the bot to post. This takes 2 minutes:**
+
+1. Visit **[nostr.com](https://nostr.com/)**
+2. Click **"Generate Keys"**
+3. **Save both keys somewhere safe:**
+   - `nsec1...` (private key) ← You'll need this for Step 5
+   - `npub1...` (public key) ← Your bot's Nostr identity
+4. **Optional:** Follow your bot's `npub` from your main Nostr account
+
+### Step 2: Download & Install
 
 ```bash
+# Clone the repository
 git clone https://github.com/ChadFarrow/BoostBot-Starter.git
-```
 
-### 3. Navigate to the directory
-
-```bash
+# Navigate to directory
 cd BoostBot-Starter
+
+# Install dependencies
+npm install
 ```
 
-### 4. Copy environment file
+### Step 3: Configure Your Bot
 
 ```bash
+# Copy the example environment file
 cp env.example .env
 ```
 
-### 5. Configure Environment
+**Edit the `.env` file:**
 
-**The `.env` file is hidden by default because its name starts with a dot. The `.env` file should be placed in the same directory as your BoostBot Starter bot files. Here's how to edit it on different systems:**
+<details>
+<summary>📁 How to edit .env file (click to expand)</summary>
 
-- 5.1 Mac & Linux
-  - 5.1.1 Show hidden files in Finder (Mac):
-    - Open the folder in Finder.
-    - Press `Command + Shift + .` (period) to toggle hidden files.
-    - You should now see `.env`. Double-click to open it in your text editor (e.g., TextEdit, VS Code).
-  - 5.1.2 Edit from the Terminal:
-    - Open Terminal.
-    - Use a text editor to open `.env`:
-      ```bash
-      nano .env
-      ```
-      or
-      ```bash
-      open -a "Visual Studio Code" .env
-      ```
-    - Make your changes, then save and close the editor.
-- 5.2 Windows
-  - 5.2.1 Show hidden files in File Explorer:
-    - Open the project folder.
-    - Click the "View" tab.
-    - Check the box for "Hidden items."
-    - You should now see `.env`. Right-click and open with Notepad or your preferred editor.
-  - 5.2.2 Edit from Command Prompt or PowerShell:
-    - Open Command Prompt or PowerShell.
-    - Use Notepad to open `.env`:
-      ```
-      notepad .env
-      ```
-    - Make your changes, then save and close Notepad.
+The `.env` file is hidden by default. Here's how to edit it:
 
-**Tip:**  
-If you don't see the `.env` file after copying, make sure you copied it from `env.example` and that you're in the correct directory.
+**🍎 Mac:**
+- **Finder:** Press `Cmd + Shift + .` to show hidden files, then double-click `.env`
+- **Terminal:** `open -a "TextEdit" .env` or `nano .env`
 
-Edit `.env` file with **only one required setting**:
+**🪟 Windows:**  
+- **File Explorer:** View tab → Check "Hidden items", then right-click `.env` → Open with Notepad
+- **Command Prompt:** `notepad .env`
+
+**🐧 Linux:**
+- **Terminal:** `nano .env` or `gedit .env`
+
+</details>
+
+**Add your Nostr key (this is the only required setting):**
 
 ```bash
-# REQUIRED: Your Nostr private key
-NOSTR_BOOST_BOT_NSEC=nsec1your_actual_nsec_here
+# REQUIRED: Your Nostr private key from Step 1
+NOSTR_BOOST_BOT_NSEC=nsec1your_actual_private_key_here
+
+# Optional settings (defaults work fine):
+# PORT=3333
+# LOG_LEVEL=INFO
+# TEST_MODE=false
 ```
 
-That's it! All other settings are optional.
-
-### 6. Install and Run
+### Step 4: Test Your Setup
 
 ```bash
-# Install dependencies
-npm install
-
 # Start the bot
 npm start
 ```
 
-### 7. Test It
-
-**Note:** You need to be in the same directory as your BoostBot Starter files to run the test commands below.
-
-In another terminal:
+**In a new terminal, test it:**
 ```bash
+# Send a test post to Nostr
 npm test
 ```
-If successful, you will see a confirmation in your terminal and the test post will appear in your Nostr client.
 
-### 8. Set Up the Webhook in Helipad
+**✅ Success looks like:**
+- Terminal shows: `✅ Test boost posted to Nostr successfully!`
+- You see the test post in your Nostr client
 
-To connect Helipad to BoostBot Starter, you need to add a webhook in Helipad so it can send boost events to your bot.
+**❌ If it fails:**
+- Check your `NOSTR_BOOST_BOT_NSEC` is correct
+- Verify the `nsec` format (starts with `nsec1`)
 
-- 8.1 Open Helipad Settings
-  - Click the **gear icon** (⚙️) in the top right corner of Helipad.
-- 8.2 Go to the "Webhooks" Tab
-  - Click the **Webhooks** tab at the top.
-- 8.3 Add a New Webhook
-  - Click the **Add Webhook** button.
-- 8.4 Fill Out the Webhook Form
-  - **URL:**  
-    Enter the URL where your BoostBot Starter is running.  
-    For example:
-    ```
-    http://<YOUR_SERVER_IP>:3333/helipad-webhook
-    ```
-    Replace `<YOUR_SERVER_IP>` with your computer's local IP address (see below).
-  - **Trigger on amount:**  
-    Select **Any amount** (or set a minimum if you want).
-  - **Trigger on:**  
-    Check the boxes for:
-    - New boosts
-    - New streams
-    - New sent boosts
-  - **Enabled:**  
-    Make sure this is checked.
-- 8.5 Save the Webhook
-  - Click **Save changes**.
-- 8.6 Test the Connection
-  - Send a boost from a compatible app and check your BoostBot Starter logs to confirm it's working.
+### Step 5: Connect Helipad
 
----
+**🚁 Tell Helipad to send webhook notifications to your bot:**
 
-- 8.7 How to Find Your Local IP Address
-  - **Mac:**
-    - 8.7.1 Open Terminal and run:
-      ```bash
-      ipconfig getifaddr en0
-      ```
-      (or try `en1` if you're on Wi-Fi and `en0` doesn't work)
-    - 8.7.2 The output is your local IP address (e.g., `192.168.1.42`).
-  - **Windows:**
-    - 8.7.1 Open Command Prompt and run:
-      ```
-      ipconfig
-      ```
-    - 8.7.2 Look for the `IPv4 Address` under your active network adapter.
-  - **Linux:**
-    - 8.7.1 Open Terminal and run:
-      ```bash
-      hostname -I
-      ```
-    - 8.7.2 The first address is usually your local IP.
-  - Use this IP in the webhook URL field in Helipad.
+1. **Open Helipad** in your browser
+2. **Click the gear icon** ⚙️ (top-right corner)
+3. **Go to "Webhooks" tab**
+4. **Click "Add Webhook"**
+5. **Fill out the form:**
 
-## API Endpoints
+   ```
+   URL: http://YOUR_LOCAL_IP:3333/helipad-webhook
+   Trigger on amount: Any amount
+   Trigger on: ✅ New boosts, ✅ New streams, ✅ New sent boosts  
+   Enabled: ✅ Checked
+   ```
 
-- `GET /` - Status page
-- `GET /health` - Health check
-- `GET /status` - Bot status
-- `POST /helipad-webhook` - Webhook endpoint
+6. **Find YOUR_LOCAL_IP:**
 
-## Webhook Format
+<details>
+<summary>🌐 How to find your local IP address (click to expand)</summary>
 
-The bot expects Helipad webhook events in this format:
+**🍎 Mac:** `ipconfig getifaddr en0`  
+**🪟 Windows:** `ipconfig` (look for IPv4 Address)  
+**🐧 Linux:** `hostname -I`
+
+Example: If your IP is `192.168.1.42`, use:
+```
+http://192.168.1.42:3333/helipad-webhook
+```
+
+</details>
+
+7. **Click "Save changes"**
+
+### Step 6: Test the Full Flow
+
+1. **Send a boost** from your podcast app (even 1 sat works)
+2. **Check your bot logs** for: `📩 Received boost webhook...`
+3. **Check Nostr** for your boost post!
+
+**🎉 You're done!** Your boosts will now automatically appear on Nostr.
+
+## 🔧 API Reference
+
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/` | GET | Status page |
+| `/health` | GET | Health check |
+| `/status` | GET | Bot status |
+| `/helipad-webhook` | POST | Receives boost webhooks |
+
+## ⚙️ Configuration Options
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `NOSTR_BOOST_BOT_NSEC` | **✅ Yes** | - | Your Nostr private key (nsec format) |
+| `PORT` | No | `3333` | Server port |
+| `LOG_LEVEL` | No | `INFO` | Logging detail (ERROR, WARN, INFO, DEBUG) |
+| `TEST_MODE` | No | `false` | Set to 'true' for test mode |
+
+## 🩺 Troubleshooting
+
+### 🚫 "Bot not posting to Nostr"
+
+**Check your Nostr key:**
+```bash
+# Your .env should look like this:
+NOSTR_BOOST_BOT_NSEC=nsec1abc123...very_long_string...xyz789
+```
+
+**Common issues:**
+- ❌ Missing `nsec1` prefix
+- ❌ Key has spaces or line breaks
+- ❌ Using `npub` instead of `nsec`
+
+### 🚫 "Webhook not working"
+
+1. **Verify BoostBot-Starter is running:**
+   ```bash
+   curl http://localhost:3333/health
+   # Should return: {"status":"ok"}
+   ```
+
+2. **Check Helipad webhook URL:**
+   - Make sure it's `http://YOUR_IP:3333/helipad-webhook`
+   - Use your actual local IP address
+   - Port 3333 should be open
+
+3. **Test with curl:**
+   ```bash
+   curl -X POST http://localhost:3333/helipad-webhook \
+     -H "Content-Type: application/json" \
+     -d '{"action":2,"value_msat_total":1000,"podcast":"Test"}'
+   ```
+
+### 🚫 "I sent a boost but nothing happened"
+
+**Check the boost conditions:**
+- Must be a **sent boost** (not received)
+- Must have `value_msat_total > 0`
+- Must have `action: 2` (boost action)
+
+**Check your logs:**
+```bash
+# Look for these messages:
+📩 Received boost webhook...
+✅ Posted boost to Nostr successfully
+```
+
+### 🚫 "Can't find .env file"
+
+The `.env` file is hidden by default:
+- Make sure you ran `cp env.example .env`
+- Enable hidden file visibility (see Step 3 above)
+- Check you're in the `BoostBot-Starter` directory
+
+### 📋 Viewing Logs
+
+**If running locally:**
+```bash
+npm start
+# Logs appear directly in terminal
+```
+
+**If running with Docker:**
+```bash
+docker logs boostbot-starter
+# or follow live:
+docker logs -f boostbot-starter
+```
+
+## 🔬 Webhook Format
+
+**BoostBot-Starter expects this JSON from Helipad:**
 
 ```json
 {
@@ -213,7 +289,7 @@ The bot expects Helipad webhook events in this format:
   "value_msat": 1000000,
   "value_msat_total": 1000000,
   "action": 2,
-  "sender": "user123",
+  "sender": "user123", 
   "app": "helipad",
   "message": "Great episode!",
   "podcast": "My Podcast",
@@ -222,112 +298,52 @@ The bot expects Helipad webhook events in this format:
 }
 ```
 
-## Nostr Posting
-
-The bot will post to Nostr when:
+**Posts to Nostr when:**
 - `action` is `2` (Boost)
-- `value_msat_total` is greater than 0
+- `value_msat_total` > 0
 
-Posts include:
-- Amount in sats
-- Sender name (if available)
-- Podcast name (if available)
-- Message (if provided)
-- Standard hashtags
-
-**Example Nostr post:**
-
-```
-💰 Boost: 333 sats from ChadF → Bowl After Bowl
-💬 "toomanyeggs.com"
-
-#NostrBoostBot #Bitcoin #Lightning #Nostr #Podcast
-```
-
-![Example Nostr Post](https://user-images.githubusercontent.com/your-github-username/your-screenshot.png)
-
-_This is a real example of a Nostr post created by the bot._
-
-## Environment Variables
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `NOSTR_BOOST_BOT_NSEC` | **Yes** | Your Nostr private key (nsec format) |
-| `TEST_MODE` | No | Set to 'true' for test mode |
-| `PORT` | No | Server port (default: 3333) |
-| `LOG_LEVEL` | No | Log level (ERROR, WARN, INFO, DEBUG) |
-
-## Troubleshooting
-
-### Bot not posting to Nostr
-- Check `NOSTR_BOOST_BOT_NSEC` is set correctly
-- Verify the nsec format is valid
-- Check logs for errors
-
-### Webhook not working
-- Verify the webhook URL is correct
-- Ensure the webhook payload format is correct
-
-### Bot won't start
-- Make sure Node.js 18+ is installed
-- Check that port 3333 is available
-- Verify your `.env` file exists
-
-### Viewing Logs
-
-To troubleshoot issues, you may need to view the logs for BoostBot Starter. Here's how:
-
-#### If running with npm (locally):
-- Open your terminal where you started the bot.
-- Logs are printed directly to the terminal window.
-- If you closed the terminal, restart the bot with:
-  ```bash
-  npm start
-  ```
-  and watch for log output.
-
-#### If running with Docker:
-- Use the following command to view logs:
-  ```bash
-  docker logs boostbot-starter
-  ```
-- You can also follow logs in real time:
-  ```bash
-  docker logs -f boostbot-starter
-  ```
-
-#### Log Files (Advanced):
-- If you have configured logging to a file (custom setup), check the path you specified in your logger configuration.
-- By default, BoostBot Starter logs to the console only.
-
-## Development
+## 🛠️ Development
 
 ```bash
 # Install dependencies
 npm install
 
-# Start the bot
+# Start development server
 npm start
 
-# Test the webhook
+# Test the webhook endpoint
 npm test
+
+# Check code style (if you add linting)
+npm run lint
 ```
 
-## File Structure
+## 📁 Project Structure
 
 ```
 boostbot-starter/
-├── 📄 README.md              # This documentation
-├── 📄 env.example            # Environment template
-├── 📄 package.json           # Dependencies
+├── 📄 README.md              # This guide
+├── 📄 env.example            # Environment template  
+├── 📄 package.json           # Dependencies & scripts
 ├── 📄 .gitignore             # Git ignore rules
 ├── 🧪 test-webhook.js        # Test script
 ├── 🤖 helipad-webhook.js     # Main webhook handler
-└── 📁 lib/                   # Library files
-    ├── 📄 logger.js          # Simple logging
-    └── 📄 nostr-bot.js       # Nostr posting logic
+└── 📁 lib/                   # Core logic
+    ├── 📄 logger.js          # Emoji logging
+    └── 📄 nostr-bot.js       # Nostr posting
 ```
 
-## License
+## 🤝 Support
 
-MIT License 
+- **🐛 Found a bug?** [Open an issue](https://github.com/ChadFarrow/BoostBot-Starter/issues)
+- **❓ Need help?** Check the troubleshooting section above
+- **💬 Community:** Find us on Nostr or in Value4Value spaces
+- **👨‍💻 Creator:** Follow [@ChadFarrow on Nostr](https://primal.net/npub177fz5zkm87jdmf0we2nz7mm7uc2e7l64uzqrv6rvdrsg8qkrg7yqx0aaq7) - `npub177fz5zkm87jdmf0we2nz7mm7uc2e7l64uzqrv6rvdrsg8qkrg7yqx0aaq7`
+
+## 📄 License
+
+MIT License - Feel free to modify and distribute!
+
+---
+
+**🎉 Happy boosting!** Share those sats and spread the word about great podcasts.
