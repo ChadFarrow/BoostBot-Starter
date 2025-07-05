@@ -10,6 +10,7 @@ const bodyParser = require('body-parser');
 const { announceHelipadPayment } = require('./lib/nostr-bot.js');
 const { logger } = require('./lib/logger.js');
 const crypto = require('crypto');
+const BoostSessionManager = require('./lib/boost-session-manager');
 
 // Create Express app
 const app = express();
@@ -27,6 +28,14 @@ const AUTH_TOKEN = process.env.HELIPAD_WEBHOOK_TOKEN;
 const boostSessions = {};
 const postedBoosts = new Set();
 const BOOST_SESSION_TIMEOUT = 30000; // 30 seconds
+const sessionManager = new BoostSessionManager(BOOST_SESSION_TIMEOUT, async (event, sessionId) => {
+  try {
+    logger.info(`💰 (Session) Posting largest split: ${Math.floor((event.value_msat_total || event.value_msat) / 1000)} sats from ${event.sender || 'Unknown'} → ${event.podcast || 'Unknown'}`);
+    await announceHelipadPayment(event);
+  } catch (nostrError) {
+    logger.error('❌ Error posting to Nostr:', nostrError.message);
+  }
+});
 
 function getMessageHash(message) {
   return crypto.createHash('sha256').update(message || '').digest('hex').slice(0, 12);
@@ -91,38 +100,7 @@ app.post('/helipad-webhook', authenticate, async (req, res) => {
       message: event.message
     });
 
-    const sessionId = getSessionId(event);
-    if (!boostSessions[sessionId]) {
-      boostSessions[sessionId] = {
-        largest: event,
-        timer: null
-      };
-    }
-    // If this split is larger, keep it
-    const currentLargest = boostSessions[sessionId].largest;
-    if ((event.value_msat_total || event.value_msat || 0) > (currentLargest.value_msat_total || currentLargest.value_msat || 0)) {
-      boostSessions[sessionId].largest = event;
-    }
-    // Reset session timer
-    if (boostSessions[sessionId].timer) {
-      clearTimeout(boostSessions[sessionId].timer);
-    }
-    boostSessions[sessionId].timer = setTimeout(async () => {
-      const toPost = boostSessions[sessionId].largest;
-      if (!postedBoosts.has(sessionId) && toPost.action === 2 && (toPost.value_msat_total || toPost.value_msat) > 0) {
-        try {
-          logger.info(`💰 (Session) Posting largest split: ${Math.floor((toPost.value_msat_total || toPost.value_msat) / 1000)} sats from ${toPost.sender || 'Unknown'} → ${toPost.podcast || 'Unknown'}`);
-          await announceHelipadPayment(toPost);
-          postedBoosts.add(sessionId);
-        } catch (nostrError) {
-          logger.error('❌ Error posting to Nostr:', nostrError.message);
-        }
-      } else {
-        logger.info('ℹ️  Skipping Nostr post (already posted, not a boost, or zero amount)');
-      }
-      delete boostSessions[sessionId];
-    }, BOOST_SESSION_TIMEOUT);
-
+    const sessionId = sessionManager.handleSplit(event);
     res.json({ success: true, message: 'Boost split received and session updated.', sessionId });
   } catch (error) {
     logger.error('❌ Error processing webhook:', error.message);
