@@ -85,12 +85,23 @@ async function runTests() {
   
   await testHealth();
   await testWebhook();
-  
-  console.log('\n✨ Test suite completed!');
-  console.log('\n💡 If tests failed, make sure:');
-  console.log('   1. BoostBot is running (npm start)');
-  console.log('   2. Port 3333 is available');
-  console.log('   3. Your .env file is configured');
+
+  // Run the Nostr test
+  console.log('\n🧪 Testing direct Nostr posting...');
+  const { spawn } = require('child_process');
+  const nostrTest = spawn('node', ['test-nostr.js'], { stdio: 'inherit' });
+  nostrTest.on('close', (code) => {
+    if (code === 0) {
+      console.log('\n✅ Nostr test completed successfully!');
+    } else {
+      console.log('\n❌ Nostr test failed.');
+    }
+    console.log('\n✨ Test suite completed!');
+    console.log('\n💡 If tests failed, make sure:');
+    console.log('   1. BoostBot is running (npm start)');
+    console.log('   2. Port 3333 is available');
+    console.log('   3. Your .env file is configured');
+  });
 }
 
 // Run tests if this file is executed directly
