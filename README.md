@@ -137,11 +137,6 @@ In another terminal:
 ```bash
 npm test
 ```
-
-To test posting directly to Nostr (optional, but recommended):
-```bash
-node test-nostr.js
-```
 If successful, you will see a confirmation in your terminal and the test post will appear in your Nostr client.
 
 ### 8. Set Up the Webhook in Helipad
