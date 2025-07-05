@@ -46,46 +46,44 @@ A simplified version of BoostBot for new users. This bot receives Helipad webhoo
 
 ## Quick Start
 
-### 1. Clone and Setup
 
-```bash
-git clone https://github.com/ChadFarrow/BoostBot-Starter.git
+3. **With this:**
 
-```bash
-cd BoostBot-Starter
+   ```markdown
+   ### 1. Clone the repository
 
-```bash
+   ```bash
+   git clone https://github.com/ChadFarrow/BoostBot-Starter.git
+   ```
 
-cp env.example .env
-```
+   ### 2. Navigate to the directory
 
-### 2. Configure Environment
+   ```bash
+   cd BoostBot-Starter
+   ```
 
-Edit `.env` file with **only one required setting**:
+   ### 3. Copy environment file
 
-```bash
-# REQUIRED: Your Nostr private key
-NOSTR_BOOST_BOT_NSEC=nsec1your_actual_nsec_here
-```
+   ```bash
+   cp env.example .env
+   ```
 
-That's it! All other settings are optional.
+   ### 4. Configure Environment
+   ```
 
-### 3. Install and Run
+4. **Update the remaining step numbers:**
+   - Current "Step 2" becomes "Step 4"
+   - Current "Step 3" becomes "Step 5" 
+   - Current "Step 4" becomes "Step 6"
 
-```bash
-# Install dependencies
-npm install
+5. **Save and commit:**
+   ```bash
+   git add README.md
+   git commit -m "Split setup into 3 separate steps"
+   git push
+   ```
 
-# Start the bot
-npm start
-```
-
-### 4. Test It
-
-In another terminal:
-```bash
-npm test
-```
+This will make it much clearer for new users to follow step by step!
 
 ## API Endpoints
 
