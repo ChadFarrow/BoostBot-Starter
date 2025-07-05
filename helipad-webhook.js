@@ -9,6 +9,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { announceHelipadPayment } = require('./lib/nostr-bot.js');
 const { logger } = require('./lib/logger.js');
+const crypto = require('crypto');
 
 // Create Express app
 const app = express();
@@ -22,9 +23,25 @@ app.use(express.static('public'));
 // Get authentication token from environment (optional)
 const AUTH_TOKEN = process.env.HELIPAD_WEBHOOK_TOKEN;
 
-// Debounce and aggregate logic to avoid duplicate Nostr posts for the same boost
-const pendingBoosts = {};
-const BOOST_DEBOUNCE_MS = 30000; // 30 seconds
+// Session grouping logic for boost splits
+const boostSessions = {};
+const postedBoosts = new Set();
+const BOOST_SESSION_TIMEOUT = 30000; // 30 seconds
+
+function getMessageHash(message) {
+  return crypto.createHash('sha256').update(message || '').digest('hex').slice(0, 12);
+}
+
+function getSessionId(event) {
+  // Compose session ID from action, sender, episode, podcast, and message hash
+  return [
+    event.action,
+    event.sender,
+    event.episode,
+    event.podcast,
+    getMessageHash(event.message)
+  ].join('-');
+}
 
 // Middleware to check authentication (if token is set)
 function authenticate(req, res, next) {
@@ -65,51 +82,48 @@ app.get('/health', (req, res) => {
 app.post('/helipad-webhook', authenticate, async (req, res) => {
   try {
     const event = req.body;
-    logger.info('📥 Received Helipad webhook:', { 
+    logger.info('📥 Received Helipad webhook:', {
       action: event.action,
       sender: event.sender,
       podcast: event.podcast,
-      amount: Math.floor(event.value_msat_total / 1000)
+      episode: event.episode,
+      amount: Math.floor(event.value_msat_total / 1000),
+      message: event.message
     });
 
-    // Composite key: time-sender-podcast
-    const boostKey = `${event.time}-${event.sender}-${event.podcast}`;
-    if (!pendingBoosts[boostKey]) {
-      pendingBoosts[boostKey] = {
-        events: [],
+    const sessionId = getSessionId(event);
+    if (!boostSessions[sessionId]) {
+      boostSessions[sessionId] = {
+        largest: event,
         timer: null
       };
     }
-    // Add this split to the list
-    pendingBoosts[boostKey].events.push(event);
-
-    // Reset debounce timer
-    if (pendingBoosts[boostKey].timer) {
-      clearTimeout(pendingBoosts[boostKey].timer);
+    // If this split is larger, keep it
+    const currentLargest = boostSessions[sessionId].largest;
+    if ((event.value_msat_total || event.value_msat || 0) > (currentLargest.value_msat_total || currentLargest.value_msat || 0)) {
+      boostSessions[sessionId].largest = event;
     }
-    pendingBoosts[boostKey].timer = setTimeout(async () => {
-      // Aggregate all splits for this boost
-      const allEvents = pendingBoosts[boostKey].events;
-      // Sum the amounts
-      const totalMsat = allEvents.reduce((sum, e) => sum + (e.value_msat_total || e.value_msat || 0), 0);
-      // Use the first event as the base
-      const baseEvent = { ...allEvents[0] };
-      baseEvent.value_msat_total = totalMsat;
-      baseEvent.value_msat = totalMsat;
-      logger.info(`💰 (Aggregated) Posting boost: ${Math.floor(totalMsat / 1000)} sats from ${baseEvent.sender || 'Unknown'} → ${baseEvent.podcast || 'Unknown'}`);
-      if (baseEvent.action === 2 && totalMsat > 0) {
+    // Reset session timer
+    if (boostSessions[sessionId].timer) {
+      clearTimeout(boostSessions[sessionId].timer);
+    }
+    boostSessions[sessionId].timer = setTimeout(async () => {
+      const toPost = boostSessions[sessionId].largest;
+      if (!postedBoosts.has(sessionId) && toPost.action === 2 && (toPost.value_msat_total || toPost.value_msat) > 0) {
         try {
-          await announceHelipadPayment(baseEvent);
+          logger.info(`💰 (Session) Posting largest split: ${Math.floor((toPost.value_msat_total || toPost.value_msat) / 1000)} sats from ${toPost.sender || 'Unknown'} → ${toPost.podcast || 'Unknown'}`);
+          await announceHelipadPayment(toPost);
+          postedBoosts.add(sessionId);
         } catch (nostrError) {
           logger.error('❌ Error posting to Nostr:', nostrError.message);
         }
       } else {
-        logger.info('ℹ️  Skipping Nostr post (not a boost or zero amount)');
+        logger.info('ℹ️  Skipping Nostr post (already posted, not a boost, or zero amount)');
       }
-      delete pendingBoosts[boostKey];
-    }, BOOST_DEBOUNCE_MS);
+      delete boostSessions[sessionId];
+    }, BOOST_SESSION_TIMEOUT);
 
-    res.json({ success: true, message: 'Boost received and will be posted after aggregation/debounce.', key: boostKey });
+    res.json({ success: true, message: 'Boost split received and session updated.', sessionId });
   } catch (error) {
     logger.error('❌ Error processing webhook:', error.message);
     res.status(500).json({ error: 'Internal server error' });
