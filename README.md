@@ -75,7 +75,7 @@ cp env.example .env
 
 ### 5. Configure Environment
 
-**The `.env` file is hidden by default because its name starts with a dot. Here's how to edit it on different systems:**
+**The `.env` file is hidden by default because its name starts with a dot. The `.env` file should be placed in the same directory as your BoostBot Starter bot files. Here's how to edit it on different systems:**
 
 - 5.1 Mac & Linux
   - 5.1.1 Show hidden files in Finder (Mac):
