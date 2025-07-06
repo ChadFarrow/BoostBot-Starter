@@ -41,7 +41,7 @@ boostbot-starter/
 | **Core Functionality** |
 | Helipad webhook reception | ✅ | ✅ |
 | Nostr posting | ✅ | ✅ |
-| Docker support | ✅ | ✅ |
+| Docker support | ❌ | ✅ |
 | Health checks | ✅ | ✅ |
 | Authentication | ✅ | ✅ |
 | **Advanced Features** |

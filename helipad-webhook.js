@@ -25,10 +25,7 @@ app.use(express.static('public'));
 const AUTH_TOKEN = process.env.HELIPAD_WEBHOOK_TOKEN;
 
 // Session grouping logic for boost splits
-const boostSessions = {};
-const postedBoosts = new Set();
-const BOOST_SESSION_TIMEOUT = 30000; // 30 seconds
-const sessionManager = new BoostSessionManager(BOOST_SESSION_TIMEOUT, async (event, sessionId) => {
+const sessionManager = new BoostSessionManager(30000, async (event, sessionId) => {
   try {
     logger.info(`💰 (Session) Posting largest split: ${Math.floor((event.value_msat_total || event.value_msat) / 1000)} sats from ${event.sender || 'Unknown'} → ${event.podcast || 'Unknown'}`);
     await announceHelipadPayment(event);
@@ -36,21 +33,6 @@ const sessionManager = new BoostSessionManager(BOOST_SESSION_TIMEOUT, async (eve
     logger.error('❌ Error posting to Nostr:', nostrError.message);
   }
 });
-
-function getMessageHash(message) {
-  return crypto.createHash('sha256').update(message || '').digest('hex').slice(0, 12);
-}
-
-function getSessionId(event) {
-  // Compose session ID from action, sender, episode, podcast, and message hash
-  return [
-    event.action,
-    event.sender,
-    event.episode,
-    event.podcast,
-    getMessageHash(event.message)
-  ].join('-');
-}
 
 // Middleware to check authentication (if token is set)
 function authenticate(req, res, next) {

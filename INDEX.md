@@ -14,9 +14,7 @@ boostbot-starter/
 ├── 📄 env.example            # Environment variables template
 ├── 📄 .env                   # Your environment variables (create this)
 ├── 📄 .gitignore             # Git ignore rules
-├── 📄 .dockerignore          # Docker ignore rules
-├── 🐳 Dockerfile             # Docker container definition
-├── 🐳 docker-compose.yml     # Docker Compose configuration
+
 ├── 🚀 start.sh               # Easy startup script
 ├── 🧪 test-webhook.js        # Test script
 ├── 🤖 helipad-webhook.js     # Main webhook handler
@@ -50,14 +48,14 @@ boostbot-starter/
 
 - **[Main Repository](../)** - Full version with advanced features
 - **[Full vs Starter Comparison](./COMPARISON.md)** - Detailed feature comparison
-- **[Docker Setup](./Dockerfile)** - Container configuration
+
 - **[Environment Variables](./env.example)** - Configuration template
 
 ## 📖 Documentation
 
 - **[README.md](./README.md)** - Complete documentation
 - **[COMPARISON.md](./COMPARISON.md)** - Feature comparison
-- **[Docker Guide](./docker-compose.yml)** - Docker setup
+
 
 ## 🛠️ Development
 

@@ -4,8 +4,8 @@
 // Load environment variables
 require('dotenv').config();
 
-// Use built-in fetch (Node.js 18+) or install node-fetch for older versions
-const fetch = globalThis.fetch || require('node-fetch');
+// Use built-in fetch (Node.js 18+)
+const fetch = globalThis.fetch;
 
 const TEST_WEBHOOK_URL = 'http://localhost:3333/helipad-webhook';
 

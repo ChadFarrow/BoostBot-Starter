@@ -271,12 +271,7 @@ npm start
 # Logs appear directly in terminal
 ```
 
-**If running with Docker:**
-```bash
-docker logs boostbot-starter
-# or follow live:
-docker logs -f boostbot-starter
-```
+
 
 ## 🔬 Webhook Format
 

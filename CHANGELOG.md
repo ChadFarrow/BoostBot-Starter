@@ -11,7 +11,7 @@
 #### Core Functionality
 - ✅ Helipad webhook reception
 - ✅ Nostr posting for boosts
-- ✅ Docker support with compose
+
 - ✅ Health check endpoints
 - ✅ Simple logging system
 - ✅ Authentication support
@@ -26,7 +26,7 @@
 #### Documentation
 - ✅ Complete README with setup instructions
 - ✅ Feature comparison with full version
-- ✅ Docker setup guide
+
 - ✅ Troubleshooting section
 - ✅ File index for navigation
 
@@ -42,9 +42,7 @@ boostbot-starter/
 ├── 📄 tsconfig.json          # TypeScript configuration
 ├── 📄 env.example            # Environment template
 ├── 📄 .gitignore             # Git ignore rules
-├── 📄 .dockerignore          # Docker ignore rules
-├── 🐳 Dockerfile             # Container definition
-├── 🐳 docker-compose.yml     # Docker compose setup
+
 ├── 🚀 start.sh               # Easy startup script
 ├── 🧪 test-webhook.js        # Test utilities
 ├── 🤖 helipad-webhook.js     # Main webhook handler
@@ -93,5 +91,5 @@ Users can easily migrate from Starter to Full version by:
 
 - **[Main Repository](../)** - Full version with all features
 - **[Full vs Starter Comparison](./COMPARISON.md)** - Detailed feature comparison
-- **[Docker Setup](./Dockerfile)** - Container configuration
+
 - **[Environment Variables](./env.example)** - Configuration template 
