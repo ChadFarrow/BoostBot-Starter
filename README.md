@@ -62,6 +62,7 @@ Your Podcast App → Lightning Payment → Helipad → BoostBot-Starter → Nost
 3. **Save both keys somewhere safe:**
    - `nsec1...` (private key) ← You'll need this for Step 5
    - `npub1...` (public key) ← Your bot's Nostr identity
+   -  Make sure to click Download Keys so you have them backed up.
 4. **Optional:** Follow your bot's `npub` from your main Nostr account
 
 ### Step 2: Download & Install
