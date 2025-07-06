@@ -58,7 +58,7 @@ Your Podcast App → Lightning Payment → Helipad → BoostBot-Starter → Nost
 **🔑 You need Nostr keys for the bot to post. This takes 2 minutes:**
 
 1. Visit **[nostr.com](https://nostr.com/)**
-2. Click **"Generate Keys"**
+2. Click **"Join Nostr"**
 3. **Save both keys somewhere safe:**
    - `nsec1...` (private key) ← You'll need this for Step 5
    - `npub1...` (public key) ← Your bot's Nostr identity
