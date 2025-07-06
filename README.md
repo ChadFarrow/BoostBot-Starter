@@ -33,16 +33,7 @@ Your Podcast App → Lightning Payment → Helipad → BoostBot-Starter → Nost
 3. **BoostBot-Starter receives a webhook** from Helipad
 4. **Your boost gets posted** to your Nostr feed
 
-## ✅ What's Included vs ❌ What's Not
 
-| ✅ **Starter Version** | ❌ **Full Version Only** |
-|----------------------|--------------------------|
-| Posts boosts to Nostr | Karma system |
-| Simple setup (no build step) | Custom npub mappings |
-| Clear emoji logging | Daily/weekly summaries |
-| Health checks | Complex monitoring |
-| Easy testing | Boost session tracking |
-| | Custom show-specific logic |
 
 ## 📋 Prerequisites
 
@@ -189,23 +180,9 @@ http://192.168.1.42:3333/helipad-webhook
 
 **🎉 You're done!** Your boosts will now automatically appear on Nostr.
 
-## 🔧 API Reference
 
-| Endpoint | Method | Purpose |
-|----------|--------|---------|
-| `/` | GET | Status page |
-| `/health` | GET | Health check |
-| `/status` | GET | Bot status |
-| `/helipad-webhook` | POST | Receives boost webhooks |
 
-## ⚙️ Configuration Options
 
-| Variable | Required | Default | Description |
-|----------|----------|---------|-------------|
-| `NOSTR_BOOST_BOT_NSEC` | **✅ Yes** | - | Your Nostr private key (nsec format) |
-| `PORT` | No | `3333` | Server port |
-| `LOG_LEVEL` | No | `INFO` | Logging detail (ERROR, WARN, INFO, DEBUG) |
-| `TEST_MODE` | No | `false` | Set to 'true' for test mode |
 
 ## 🩺 Troubleshooting
 
