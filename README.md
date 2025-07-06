@@ -310,7 +310,7 @@ boostbot-starter/
 - **🐛 Found a bug?** [Open an issue](https://github.com/ChadFarrow/BoostBot-Starter/issues)
 - **❓ Need help?** Check the troubleshooting section above
 - **💬 Community:** Find us on Nostr or in Value4Value spaces
-- **👨‍💻 Creator:** Follow [@ChadFarrow on Nostr](https://primal.net/npub177fz5zkm87jdmf0we2nz7mm7uc2e7l64uzqrv6rvdrsg8qkrg7yqx0aaq7) - `npub177fz5zkm87jdmf0we2nz7mm7uc2e7l64uzqrv6rvdrsg8qkrg7yqx0aaq7`
+- **👨‍💻 Creator:** Follow [@ChadFarrow on Nostr](https://nosta.me/npub177fz5zkm87jdmf0we2nz7mm7uc2e7l64uzqrv6rvdrsg8qkrg7yqx0aaq7) - `npub177fz5zkm87jdmf0we2nz7mm7uc2e7l64uzqrv6rvdrsg8qkrg7yqx0aaq7`
 
 ## 📄 License
 
