@@ -46,6 +46,7 @@ Your Podcast App → Lightning Payment → Helipad → BoostBot-Starter → Nost
 - **📱 Compatible podcast app** - [Podverse](https://podverse.fm/), [PodcastGuru](https://podcastguru.io/), [CurioCaster](https://curiocaster.com/), [Castamatic](https://castamatic.com/), [LNBeats](https://lnbeats.com/) ([full list](https://podcasting2.org/apps))
 - **🔑 Nostr account** - We'll help you create one below
 - **💻 Basic terminal skills** - Copy/paste commands
+- **🟢 Node.js 24.22.1 or later** (or 22.23.4+ on the 22.x line) - older versions are missing the October 2026 security fixes
 
 > **⚠️ Security Note:** Create a NEW Nostr key pair for this bot - don't use your personal keys!
 
